@@ -31,6 +31,11 @@
       margin-top: 10px;
     }
 
+    #timer {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
     #sleep-info {
       font-size: 18px;
       position: absolute;
@@ -60,15 +65,24 @@
 <body>
   <h1>Kyoukster Time</h1>
   <div id="Bolivia_z14c"></div>
+  <div id="timer"></div>
 
   <div id="sleep-info">Goes to bed at 3 to 5 am</div>
   <div id="wake-up-info">Waking up always at 1 pm</div>
 
   <script>
+    // Initialize start time
+    var startTime = new Date();
+
     function getTimeInBolivia() {
       var options = { timeZone: 'America/La_Paz', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
       var boliviaTime = new Date().toLocaleTimeString("en-US", options);
       document.getElementById("Bolivia_z14c").innerText = boliviaTime;
+
+      // Calculate elapsed time
+      var elapsedTime = new Date() - startTime;
+      var elapsedSeconds = Math.floor(elapsedTime / 1000);
+      document.getElementById("timer").innerText = "Site has been running for " + elapsedSeconds + " seconds";
     }
 
     getTimeInBolivia();

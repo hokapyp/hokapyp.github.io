@@ -71,8 +71,14 @@
   <div id="wake-up-info">Waking up always at 1 pm</div>
 
   <script>
-    // Initialize start time
-    var startTime = new Date();
+    // Check if start time is stored in localStorage
+    var startTime = localStorage.getItem('startTime');
+
+    // If not stored, set the start time
+    if (!startTime) {
+      startTime = new Date();
+      localStorage.setItem('startTime', startTime);
+    }
 
     function getTimeInBolivia() {
       var options = { timeZone: 'America/La_Paz', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
@@ -80,9 +86,14 @@
       document.getElementById("Bolivia_z14c").innerText = boliviaTime;
 
       // Calculate elapsed time
-      var elapsedTime = new Date() - startTime;
+      var elapsedTime = new Date() - new Date(startTime);
       var elapsedSeconds = Math.floor(elapsedTime / 1000);
-      document.getElementById("timer").innerText = "Site has been running for " + elapsedSeconds + " seconds";
+
+      // Convert seconds to minutes and hours
+      var minutes = Math.floor(elapsedSeconds / 60);
+      var hours = Math.floor(minutes / 60);
+
+      document.getElementById("timer").innerText = "Site has been running for " + hours + " hours and " + (minutes % 60) + " minutes";
     }
 
     getTimeInBolivia();
